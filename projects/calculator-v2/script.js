@@ -1,4 +1,5 @@
 let calculation = '';
+let output = '';
 const buttons = document.querySelectorAll('.btn');
 const calculationDisplay = document.querySelector('.calculation-display');
 const clearCalculationBtn = document.getElementById('clear-calculation-btn');
@@ -63,6 +64,8 @@ function deleteCalculationFun() {
 }
 
 function calculate() {
+    if (output === calculation) return;
+
     const tokens = calculation.split(' ');
 
     for (let i = 0; i < tokens.length; i++) {
@@ -98,7 +101,7 @@ function calculate() {
         }
     }
 
-    const output = String(tokens[0]);
+    output = String(tokens[0]);
     let html = '', calculationHistoryHtmls = '';
 
     if (calculationHistoryArr.length >= 5) {
