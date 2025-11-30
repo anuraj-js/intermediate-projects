@@ -1,4 +1,4 @@
-let calculation = '';
+let calculation = localStorage.getItem('calculation') || '';
 let output = '';
 const buttons = document.querySelectorAll('.btn');
 const calculationDisplay = document.querySelector('.calculation-display');
@@ -12,6 +12,10 @@ let calculationHistoryArr = [];
 
 function calculationDisplayFun() {
     calculationDisplay.textContent = String(calculation);
+}
+
+function updateCalculationInLS() {
+    localStorage.setItem('calculation', calculation);
 }
 
 function calculationFun(value) {
@@ -39,11 +43,13 @@ function calculationFun(value) {
     }
     
     calculation += value;
+    updateCalculationInLS()
     calculationDisplayFun();
 }
 
 function clearCalculationFun() {
     calculation = '';
+    updateCalculationInLS();
     calculationHistoryArr = [];
     calculationHistoryDisplay.textContent = '';
     calculationDisplayFun();
@@ -60,11 +66,15 @@ function deleteCalculationFun() {
         calculation = calculation.slice(0, -1);
     }
     
+    updateCalculationInLS();
     calculationDisplayFun();
 }
 
 function calculate() {
-    if (output === calculation) return;
+    const operators = ['+', '-', '*', '/'];
+    const lastThree = calculation.slice(-3).trim();
+
+    if (output === calculation || operators.includes(lastThree)) return;
 
     const tokens = calculation.split(' ');
 
@@ -117,7 +127,8 @@ function calculate() {
     
     calculationHistoryDisplay.innerHTML = calculationHistoryHtmls;
 
-    calculation = output;
+    calculation = String(output);
+    updateCalculationInLS();
     calculationDisplayFun();
 }
 
@@ -135,6 +146,7 @@ function percentage() {
     const percentValue = Number(lastPart) / 100;
 
     calculation = calculation.slice(0, -lastPart.length) + percentValue;
+    updateCalculationInLS();
     calculationDisplayFun();
 }
 
@@ -149,6 +161,7 @@ function plusMinus() {
     const plusMinusValue = String(-Number(lastPart)); 
 
     calculation = calculation.slice(0, -lastPart.length) + plusMinusValue;
+    updateCalculationInLS();
     calculationDisplayFun();
 }
 
