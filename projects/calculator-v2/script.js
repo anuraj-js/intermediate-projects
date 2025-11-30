@@ -1,12 +1,13 @@
 let calculation = '';
 const buttons = document.querySelectorAll('.btn');
 const calculationDisplay = document.querySelector('.calculation-display');
-const calculationHistoryDisplay = document.querySelector('.calculation-history-display');
 const clearCalculationBtn = document.getElementById('clear-calculation-btn');
 const deleteCalculationBtn = document.getElementById('delete-calculation-btn');
 const equalsBtn = document.getElementById('equals-btn');
 const percentageBtn = document.getElementById('percentage-btn');
 const plusMinusBtn = document.getElementById('plus-minus-btn');
+const calculationHistoryDisplay = document.querySelector('.calculation-history-display');
+let calculationHistoryArr = [];
 
 function calculationDisplayFun() {
     calculationDisplay.textContent = String(calculation);
@@ -42,6 +43,8 @@ function calculationFun(value) {
 
 function clearCalculationFun() {
     calculation = '';
+    calculationHistoryArr = [];
+    calculationHistoryDisplay.textContent = '';
     calculationDisplayFun();
 }
 
@@ -95,7 +98,23 @@ function calculate() {
         }
     }
 
-    calculation = String(tokens[0]);
+    const output = String(tokens[0]);
+    let html = '', calculationHistoryHtmls = '';
+
+    if (calculationHistoryArr.length >= 5) {
+        calculationHistoryArr.shift();
+    }
+
+    calculationHistoryArr.push(`${calculation} = ${output}`);
+    
+    for (let i = 0; i < calculationHistoryArr.length; i++) {
+        html = `<p>${calculationHistoryArr[i]}</p>`;
+        calculationHistoryHtmls += html;
+    }
+    
+    calculationHistoryDisplay.innerHTML = calculationHistoryHtmls;
+
+    calculation = output;
     calculationDisplayFun();
 }
 
