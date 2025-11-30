@@ -8,7 +8,7 @@ const equalsBtn = document.getElementById('equals-btn');
 const percentageBtn = document.getElementById('percentage-btn');
 const plusMinusBtn = document.getElementById('plus-minus-btn');
 const calculationHistoryDisplay = document.querySelector('.calculation-history-display');
-let calculationHistoryArr = [];
+let calculationHistoryArr = JSON.parse(localStorage.getItem('calculationHistoryArr')) || [];
 
 function calculationDisplayFun() {
     calculationDisplay.textContent = String(calculation);
@@ -16,6 +16,21 @@ function calculationDisplayFun() {
 
 function updateCalculationInLS() {
     localStorage.setItem('calculation', calculation);
+}
+
+function calculationHistoryDisplayFun() {
+    let calculationHistoryHtmls = '';
+    
+    for (let i = 0; i < calculationHistoryArr.length; i++) {
+        const html = `<p>${calculationHistoryArr[i]}</p>`;
+        calculationHistoryHtmls += html;
+    }
+    
+    calculationHistoryDisplay.innerHTML = calculationHistoryHtmls;
+}
+
+function updateCalculationArrInLS() {
+    localStorage.setItem('calculationHistoryArr', JSON.stringify(calculationHistoryArr));
 }
 
 function calculationFun(value) {
@@ -50,8 +65,11 @@ function calculationFun(value) {
 function clearCalculationFun() {
     calculation = '';
     updateCalculationInLS();
+
     calculationHistoryArr = [];
     calculationHistoryDisplay.textContent = '';
+    updateCalculationArrInLS();
+
     calculationDisplayFun();
 }
 
@@ -112,20 +130,16 @@ function calculate() {
     }
 
     output = String(tokens[0]);
-    let html = '', calculationHistoryHtmls = '';
 
     if (calculationHistoryArr.length >= 5) {
         calculationHistoryArr.shift();
+        updateCalculationArrInLS();
     }
 
     calculationHistoryArr.push(`${calculation} = ${output}`);
+    updateCalculationArrInLS();
     
-    for (let i = 0; i < calculationHistoryArr.length; i++) {
-        html = `<p>${calculationHistoryArr[i]}</p>`;
-        calculationHistoryHtmls += html;
-    }
-    
-    calculationHistoryDisplay.innerHTML = calculationHistoryHtmls;
+    calculationHistoryDisplayFun();
 
     calculation = String(output);
     updateCalculationInLS();
@@ -183,6 +197,6 @@ percentageBtn.addEventListener('click', percentage);
 plusMinusBtn.addEventListener('click', plusMinus);
 
 calculationDisplayFun();
-
+calculationHistoryDisplayFun();
 
 
