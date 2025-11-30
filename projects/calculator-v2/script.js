@@ -13,12 +13,14 @@ function calculationDisplayFun() {
 }
 
 function calculationFun(value) {
+    if (!value) return;
+    
     const operators = [' + ', ' - ', ' * ', ' / '];
     const lastThree = calculation.slice(-3);
 
-    if (operators.includes(lastThree) && operators.includes(value)) return;
+    if (operators.includes(value)  && calculation === '') return;
 
-    if ((value === (' + ') || value === (' - ') || value === (' * ') || value === (' / '))  && calculation === '') return;
+    if (operators.includes(lastThree) && operators.includes(value)) return;
 
     const tokens = calculation.split(/[+\-\*\/]/);
 
