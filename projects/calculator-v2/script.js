@@ -1,4 +1,4 @@
-let calculation = localStorage.getItem('calculation') || '';
+let calculation = localStorage.getItem('calculation-v2') || '';
 let output = '';
 const buttons = document.querySelectorAll('.btn');
 const calculationDisplay = document.querySelector('.calculation-display');
@@ -15,12 +15,12 @@ function calculationDisplayFun() {
 }
 
 function updateCalculationInLS() {
-    localStorage.setItem('calculation', calculation);
+    localStorage.setItem('calculation-v2', calculation);
 }
 
 function calculationHistoryDisplayFun() {
     let calculationHistoryHtmls = '';
-    
+
     for (let i = 0; i < calculationHistoryArr.length; i++) {
         const html = `<p>${calculationHistoryArr[i]}</p>`;
         calculationHistoryHtmls += html;
