@@ -30,8 +30,7 @@ main {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 20px;
-    box-shadow: 0 0 20px #3D4047;
+    gap: 12px;
 }
 
 .calculation-display {
@@ -45,12 +44,30 @@ main {
     font-size: 1.5rem;
     font-weight: 700;
     padding: 25px;
-    overflow-y: auto;
+    overflow-x: auto;
     white-space: nowrap;
 }
 
 .calculation-display::-webkit-scrollbar {
     height: 0;
+}
+
+.calculation-history-display {
+    height: auto;
+    width: 80%;
+    color: #ffffff;
+    margin-top: 10px;
+    text-align: center;
+    white-space: nowrap;
+    overflow-x: scroll;
+}
+
+.calculation-history-display::-webkit-scrollbar {
+    height: 0;
+}
+
+.calculation-history-display p {
+    padding: 5px;
 }
 
 .buttons-tab {
