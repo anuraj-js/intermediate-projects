@@ -41,13 +41,12 @@ main {
     border-radius: 45px;
     box-shadow: 0 0 40px #121417;
     margin: 10px;
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
+    text-align: right;
     font-size: 1.5rem;
     font-weight: 700;
-    padding: 0 25px;
+    padding: 25px;
     overflow-y: auto;
+    white-space: nowrap;
 }
 
 .calculation-display::-webkit-scrollbar {
